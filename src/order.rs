@@ -1,18 +1,18 @@
 use chrono::{DateTime, Utc};
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub enum OrderAction {
-	Bid,
-	Ask,
+	Buy,
+	Sell,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub enum OrderFamily {
 	Market,
 	Limit,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub enum OrderStatus {
 	Open,
 	Partial,
@@ -20,14 +20,14 @@ pub enum OrderStatus {
 	Executed,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub enum OrderDuration {
 	Day,
 	GoodTillCancelled,
 	ImmidiateOrCancel,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Order {
 	pub id: String,
 	pub quantity: i32,
@@ -40,3 +40,10 @@ pub struct Order {
 	pub created_at: DateTime<Utc>,
 	pub updated_at: DateTime<Utc>,
 }
+
+impl PartialEq for Order {
+	fn eq(&self, other: &Self) -> bool {
+		((self.price - other.price) < f64::EPSILON) && self.created_at == other.created_at
+	}
+}
+impl Eq for Order {}
