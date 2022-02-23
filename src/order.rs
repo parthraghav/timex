@@ -16,8 +16,6 @@ pub enum OrderFamily {
 pub enum OrderStatus {
 	Open,
 	Partial,
-	Cancelled,
-	Executed,
 }
 
 #[derive(Debug, Clone, Copy)]
